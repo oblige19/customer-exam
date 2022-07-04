@@ -1,6 +1,7 @@
 package com.customer.demo.service.impl;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
@@ -13,6 +14,7 @@ import com.customer.demo.service.CustomerService;
 
 @Service
 public class CustomerServiceImpl implements CustomerService {
+	private static final String SUCCESS_MESSAGE = "Success";
 	
 	private final CustomerRepository repository;
 	private final RestTemplate restTemplate;
@@ -30,23 +32,37 @@ public class CustomerServiceImpl implements CustomerService {
 
 	@Override
 	public Customer find(Long id) {
-		return repository.findById(id).orElse(new Customer());
+		Optional<Customer> result = repository.findById(id);
+		
+		Customer customer = null;
+		
+		if (result.isPresent()) {
+			customer = result.get();
+		}
+		else {
+			// we didn't find the customer
+			throw new RuntimeException("Did not find customer id - " + id);
+		}
+		
+		return customer;
 	}
 
 	@Override
 	public String create(Customer customer) {
-		return null;
+		repository.save(customer);
+		return SUCCESS_MESSAGE;
 	}
 
 	@Override
 	public String update(Customer customer) {
-		return null;
+		repository.save(customer);
+		return SUCCESS_MESSAGE;
 	}
 
 	@Override
 	public String delete(Long id) {
 		repository.deleteById(id);
-		return null;
+		return SUCCESS_MESSAGE;
 	}
 
 	@Override

@@ -2,6 +2,8 @@ package com.customer.demo.controller;
 
 import java.util.List;
 
+import org.springframework.http.MediaType;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -38,14 +40,19 @@ public class CustomerController {
 		return service.findWithContact(id);
 	}
 	
-	@PostMapping("")
+	@PostMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public String create(@RequestBody Customer customer) {
 		return service.create(customer);
 	}
 	
-	@PutMapping("")
+	@PutMapping(value = "", consumes = MediaType.APPLICATION_JSON_VALUE)
 	public String update(@RequestBody Customer customer) {
 		return service.update(customer);
+	}
+	
+	@DeleteMapping("/{id}")
+	public String delete(@PathVariable("id") Long id) {
+		return service.delete(id);
 	}
 	
 }
