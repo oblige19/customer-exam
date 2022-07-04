@@ -4,10 +4,6 @@ server:
 spring:
   application:
     name: CUSTOMER-SERVICE
-  datasource:
-    url: jdbc:mysql://localhost:3306/microservice?useSSL=false&serverTimezone=UTC
-    username: root
-    password: admin
     
 eureka:
   client:
